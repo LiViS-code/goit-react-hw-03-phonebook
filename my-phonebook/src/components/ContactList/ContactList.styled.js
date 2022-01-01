@@ -3,7 +3,7 @@ import { theme } from "../../constants/Theme";
 
 const {
   spacing,
-  colors: { primaryColor, accentColor },
+  colors: { accentColor },
   transition: { timing, timingFunction },
 } = theme;
 
