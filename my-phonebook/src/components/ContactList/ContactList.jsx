@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { IconContext } from "react-icons";
 import { FcDeleteDatabase } from "react-icons/fc";
 import {
@@ -49,5 +50,11 @@ class ContactList extends Component {
     );
   }
 }
+
+ContactList.propTypes = {
+  contacts: PropTypes.array.isRequired,
+  filter: PropTypes.string.isRequired,
+  onDelete: PropTypes.func.isRequired,
+};
 
 export default ContactList;

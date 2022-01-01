@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { FcFilledFilter } from "react-icons/fc";
 import { Container } from "./Filter.styled";
 import { Input, Label } from "../ContactForm/ContactForm.styled";
@@ -28,5 +29,9 @@ class Filter extends Component {
     );
   }
 }
+
+Filter.propTypes = {
+  onFilter: PropTypes.func.isRequired,
+};
 
 export default Filter;

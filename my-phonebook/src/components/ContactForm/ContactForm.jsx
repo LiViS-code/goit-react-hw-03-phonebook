@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { nanoid } from "nanoid";
 import { ToastContainer } from "react-toastify";
 import { IconContext } from "react-icons";
@@ -97,5 +98,10 @@ class ContactForm extends Component {
     );
   }
 }
+
+ContactForm.propTypes = {
+  contacts: PropTypes.array.isRequired,
+  onChangeState: PropTypes.func.isRequired,
+};
 
 export default ContactForm;
