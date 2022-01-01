@@ -9,13 +9,7 @@ import phonebook from "./img/phonebook.png";
 
 class App extends Component {
   state = {
-    contacts: [
-      { id: "id-1", name: "Rosie Simpson", number: "+38(067) 459-12-56" },
-      { id: "id-2", name: "Hermione Kline", number: "+38(093) 443-89-12" },
-      { id: "id-3", name: "Eden Clements", number: "+38(095) 645-17-79" },
-      { id: "id-4", name: "Annie Copeland", number: "+38(099) 227-91-26" },
-      { id: "id-5", name: "Vasily Lopatkin", number: "+38(067) 503-44-64" },
-    ],
+    contacts: [],
     filter: "",
   };
 
@@ -23,6 +17,7 @@ class App extends Component {
     this.setState(() => ({
       contacts: newContacts,
     }));
+    this.saveToLocalStorage();
   };
 
   onFilter = (word) => {
@@ -35,15 +30,25 @@ class App extends Component {
       if (contacts[i].id === id) {
         const name = contacts[i].name;
         contacts.splice(i, 1);
-        this.alert(name, "info");
+        toastMsg(name, "info");
         break;
       }
     }
     this.onChangeState(contacts);
   };
 
-  alert = (name, type) => {
-    toastMsg(name, type);
+  saveToLocalStorage() {
+    const arrContacts = [];
+    this.state.contacts.map((contact) => arrContacts.push(contact));
+    localStorage.setItem("contacts", JSON.stringify(arrContacts));
+  }
+
+  componentDidMount = () => {
+    if (localStorage.getItem("contacts")) {
+      this.setState({
+        contacts: JSON.parse(localStorage.getItem("contacts")),
+      });
+    }
   };
 
   render() {
@@ -53,7 +58,7 @@ class App extends Component {
       onFilter,
       onDelete,
     } = this;
-    const onContctsGroup = contacts.length ? true : false;
+    const onContctsGroup = contacts.length !== 0 ? true : false;
     const onContactsFilter = contacts.length >= 2 ? true : false;
 
     return (

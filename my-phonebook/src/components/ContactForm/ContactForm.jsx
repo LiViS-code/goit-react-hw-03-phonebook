@@ -23,12 +23,12 @@ class ContactForm extends Component {
     e.preventDefault();
     const { name, number } = this.state;
     const { contacts, onChangeState } = this.props;
-    if (this.matchCheck(name, contacts)) return this.alert(name, "warn");
+    if (this.matchCheck(name, contacts)) return toastMsg(name, "warn");
     contacts.push({ id: nanoid(), name: name, number: number });
     this.setState(() => ({ number: number }));
     onChangeState(contacts);
     this.reset();
-    this.alert(name, "success");
+    toastMsg(name, "success");
   };
 
   matchCheck = (name, contacts) => {
@@ -36,10 +36,6 @@ class ContactForm extends Component {
       if (contacts[i].name === name) return true;
     }
     return false;
-  };
-
-  alert = (name, type) => {
-    toastMsg(name, type);
   };
 
   reset = () => {
