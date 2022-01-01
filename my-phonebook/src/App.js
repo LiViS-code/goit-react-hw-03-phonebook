@@ -53,6 +53,8 @@ class App extends Component {
       onFilter,
       onDelete,
     } = this;
+    const onContctsGroup = contacts.length ? true : false;
+    const onContactsFilter = contacts.length >= 2 ? true : false;
 
     return (
       <Container>
@@ -61,10 +63,10 @@ class App extends Component {
           Phonebook
         </Title>
         <ContactForm contacts={contacts} onChangeState={onChangeState} />
-        {contacts.length ? (
+        {onContctsGroup ? (
           <>
             <ContactsTitle>Contacts</ContactsTitle>
-            <Filter onFilter={onFilter} />
+            {onContactsFilter && <Filter onFilter={onFilter} />}
             <ContactList
               contacts={contacts}
               filter={filter}
