@@ -59,7 +59,7 @@ class App extends Component {
       onDelete,
     } = this;
     const onContctsGroup = contacts.length !== 0 ? true : false;
-    const onContactsFilter = contacts.length >= 2 ? true : false;
+    const onContactsFilter = contacts.length >= 1 ? true : false;
 
     return (
       <Container>
