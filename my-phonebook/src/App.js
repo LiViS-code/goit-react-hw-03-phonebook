@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "react-toastify/dist/ReactToastify.css";
+import { nanoid } from "nanoid";
 import ContactForm from "./components/ContactForm/ContactForm";
 import ContactList from "./components/ContactList/ContactList";
 import Filter from "./components/Filter/Filter";
@@ -13,11 +14,28 @@ class App extends Component {
     filter: "",
   };
 
-  onChangeState = (newContacts) => {
-    this.setState(() => ({
-      contacts: newContacts,
+  onChangeState = (name, number) => {
+    if (this.matchCheckName(name, this.state.contacts)) {
+      toastMsg(name, "warn");
+      return "not success";
+    }
+
+    const newContact = [{ id: nanoid(), name: name, number: number }];
+
+    this.setState((s) => ({
+      contacts: s.contacts.concat(newContact),
     }));
+
     this.saveToLocalStorage();
+    toastMsg(name, "success");
+    return "success";
+  };
+
+  matchCheckName = (name, contacts) => {
+    for (let i = 0; i < contacts.length; i += 1) {
+      if (contacts[i].name === name) return true;
+    }
+    return false;
   };
 
   onFilter = (word) => {
@@ -25,20 +43,23 @@ class App extends Component {
   };
 
   onDelete = (id) => {
-    const { contacts } = this.state;
-    for (let i = 0; i < contacts.length; i += 1) {
-      if (contacts[i].id === id) {
-        const name = contacts[i].name;
-        contacts.splice(i, 1);
+    const newContacts = this.state.contacts;
+
+    for (let i = 0; i < newContacts.length; i += 1) {
+      if (newContacts[i].id === id) {
+        const name = newContacts[i].name;
+        newContacts.splice(i, 1);
+        this.setState({ contacts: newContacts });
         toastMsg(name, "info");
+        this.saveToLocalStorage();
         break;
       }
     }
-    this.onChangeState(contacts);
   };
 
   saveToLocalStorage() {
     const arrContacts = [];
+
     this.state.contacts.map((contact) => arrContacts.push(contact));
     localStorage.setItem("contacts", JSON.stringify(arrContacts));
   }
