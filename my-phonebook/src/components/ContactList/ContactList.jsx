@@ -16,7 +16,7 @@ class ContactList extends Component {
 
     if (filter) {
       filterContacts = contacts.filter(({ name }) =>
-        name.toUpperCase().includes(filter)
+        name.toLowerCase().includes(filter)
       );
     }
 

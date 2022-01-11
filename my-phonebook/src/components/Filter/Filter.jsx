@@ -13,6 +13,7 @@ class Filter extends Component {
 
   render() {
     const { handleInput } = this;
+    const { filter } = this.props;
     return (
       <Container>
         <Label htmlFor="inputFilter">
@@ -22,6 +23,7 @@ class Filter extends Component {
         <Input
           id="inputFilter"
           type="text"
+          value={filter}
           name="filter"
           onChange={handleInput}
         ></Input>
@@ -32,6 +34,7 @@ class Filter extends Component {
 
 Filter.propTypes = {
   onFilter: PropTypes.func.isRequired,
+  filter: PropTypes.string.isRequired,
 };
 
 export default Filter;
